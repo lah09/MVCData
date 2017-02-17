@@ -8,9 +8,9 @@
 @using (Html.BeginForm("FeverCheckForm", "FeverCheck", FormMethod.Post))
 {
     @Html.Label("*Use comma instead of period for decimal number")<br /><br />
-    @Html.Label("Temperature")
+    @Html.Label("Temperature ")
     @Html.TextBox("temperature")
-    @Html.Label("°C")
+    @Html.Label(" °C")
     <button type="submit">Check</button><br />
 }
 

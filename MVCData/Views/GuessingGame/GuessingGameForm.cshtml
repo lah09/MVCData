@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewBag.Title = "GuessingGameForm";
+}
+
+<h2 style="color:coral">Guessing Game</h2><br />
+
+@using (Html.BeginForm("GuessingGameForm", "GuessingGame", FormMethod.Post))
+{
+    @Html.Label("The computer will give a random number from 1-100")<br />
+    @Html.Label("You must guess that number")<br />
+    @Html.Label("You'll then get hint from the computer whether your guess is too high or too low")<br />
+    @Html.Label("You win if you hit it!")<br /><br />
+    @Html.Label("Start now and try your luck! ")
+    <input type="number" name="guessNum" id="guessNum" value="0" />
+    <button type="submit">Check</button><br /><br />
+}
+
+<h4 style="color:#f60e0e">@ViewBag.Message</h4>
+<h5>@ViewBag.NumberOfGuess</h5>
+

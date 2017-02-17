@@ -9,6 +9,14 @@
     padding-right: 15px;
 }
 
+.navbar-brand img {
+    height: 25px;
+}
+
+a{
+    color:#000000 !important;
+}
+
 /* Set width on the form input elements since they're 100% wide by default */
 input,
 select,
