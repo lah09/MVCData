@@ -1,0 +1,17 @@
+﻿
+@{
+    ViewBag.Title = "FeverCheckForm";
+}
+
+<h2 style="color:coral">Check Body Temperature</h2><br />
+
+@using (Html.BeginForm("FeverCheckForm", "FeverCheck", FormMethod.Post))
+{
+    @Html.Label("*Use comma instead of period for decimal number")<br /><br />
+    @Html.Label("Temperature")
+    @Html.TextBox("temperature")
+    @Html.Label("°C")
+    <button type="submit">Check</button><br />
+}
+
+<h4>@ViewBag.Message</h4>
