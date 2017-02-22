@@ -1,0 +1,22 @@
+﻿@model IEnumerable<MVCData.Models.People>
+
+@{
+    ViewBag.Title = "IndexPeople";
+}
+
+<table class="table table-bordered table-responsive table-striped">
+    <tr>
+        <th>Name</th>
+        <th>City</th>
+        <th>Telephone Number</th>
+    </tr>
+
+    @foreach (var act in Model)
+    {
+        <tr>
+            <td>@act.name</td>
+            <td>@act.city</td>
+            <td>@act.telephone</td>
+        </tr>  
+    }
+    </table>  
