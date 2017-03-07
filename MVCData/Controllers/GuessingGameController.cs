@@ -24,10 +24,11 @@ namespace MVCData.Controllers
                 Session["randNum"] = rand.Next(1, 101);
                 Session["guessAmount"] = 0;
             }
+
             Session["guessAmount"] = (int)Session["guessAmount"] + 1;
             Session["guess"] = guessNum;
             int randNum = (int)Session["randNum"];
-
+            
             if (guessNum < randNum)
             {
                 ViewBag.Message = "Your number is too low!";
@@ -48,6 +49,7 @@ namespace MVCData.Controllers
             }
 
             ViewBag.NumberOfGuess = "Number of guess: " + Session["guessAmount"];
+            
             return View();
         }
     }

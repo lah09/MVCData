@@ -1,22 +1,48 @@
-﻿@model IEnumerable<MVCData.Models.People>
+﻿@model IEnumerable<MVCData.Models.People>       /* IEnumerable gets the List of People */
 
 @{
     ViewBag.Title = "IndexPeople";
 }
 
+<br />
+<h2 style="color:blue">Search</h2><br />
+@using (Html.BeginForm("IndexPeople", "People", FormMethod.Post)) //Post Form for Name and City
+{
+    <br />        
+    @Html.RadioButton("searchBy", "name")<text>Name </text>
+    @Html.RadioButton("searchBy", "city")<text>City </text>
+    @Html.TextBox("searchByLetter")<input type="submit" value="Search" /><br /><br />
+}
+<p>
+    @Html.ActionLink("Create New", "Create")<br /><br />        @*//create button that leads to create view*@   
+</p>
 <table class="table table-bordered table-responsive table-striped">
-    <tr>
-        <th>Name</th>
+    <tr> @*/*table row*/*@
+        <th>PersonId</th>
+        <th>Name</th>       @*//table head*@
         <th>City</th>
         <th>Telephone Number</th>
+        <th>Action</th>
     </tr>
 
-    @foreach (var act in Model)
+    @if (Model.Count() == 0)        //if input doesn't much anything in the list text message of "No match for search..." will be displayed
     {
-        <tr>
-            <td>@act.name</td>
-            <td>@act.city</td>
-            <td>@act.telephone</td>
-        </tr>  
+        <tr>  @*//table column*@
+            <td colspan="3">No match for search criteria</td>  @*//colspan of 3 columns (name, city, telephone)*@
+        </tr>
     }
-    </table>  
+    else
+    {
+        foreach (var act in Model)      //displays all the listed names, cities and telephone number
+        {
+            <tr>
+                <td>@act.PersonId</td>
+                <td>@act.Name</td>
+                <td>@act.City</td>
+                <td>@act.Telephone</td>
+                <td>@Html.ActionLink("Delete", "Delete", new {id=act.PersonId})</td>     @*//delete button that leads to delete view,  id=act.PrimaryKey*@
+            </tr>
+        }
+    }
+</table>
+<br /><br />

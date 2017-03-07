@@ -1,0 +1,15 @@
+﻿
+@{
+    ViewBag.Title = "IndexSearch";
+}
+
+<h2 style="color:coral">Search</h2><br /><br />
+
+@using (Html.BeginForm("IndexSearch", "People", FormMethod.Post)) //it should Post not Get
+{
+    <b>Search</b>
+    @Html.RadioButton("searchBy", "name", true)<text>Name</text>
+    @Html.RadioButton("searchBy", "city")<text>City</text>
+    <br />
+    @Html.TextBox("search")<input type="submit" value="Search" />
+}

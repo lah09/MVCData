@@ -17,7 +17,7 @@ namespace MVCData
                 "FeverCheck",                                                   //Route name
                 "fevercheck",                                                   //URL with parameters
                 new { controller = "FeverCheck", action = "FeverCheckForm" }    // Parameter defaults
-            );
+            );            
 
             routes.MapRoute(
                 "Default",
@@ -26,15 +26,15 @@ namespace MVCData
             );
         }
 
-        protected void Application_Start()
-        {
-            RegisterRoutes(RouteTable.Routes);
-        }
-
         //protected void Application_Start()
         //{
-        //    AreaRegistration.RegisterAllAreas();
-        //    RouteConfig.RegisterRoutes(RouteTable.Routes);
+        //    RegisterRoutes(RouteTable.Routes);
         //}
+
+        protected void Application_Start()
+        {
+            AreaRegistration.RegisterAllAreas();
+            RouteConfig.RegisterRoutes(RouteTable.Routes);
+        }
     }
 }
