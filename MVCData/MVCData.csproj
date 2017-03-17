@@ -138,6 +138,8 @@
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -177,7 +179,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\People\IndexPeople.cshtml" />
-    <Content Include="Views\People\IndexSearch.cshtml" />
+    <Content Include="Views\People\Search.cshtml" />
     <Content Include="Views\People\Create.cshtml" />
     <Content Include="Views\People\Delete.cshtml" />
     <Content Include="Views\test\Create.cshtml" />
@@ -185,8 +187,8 @@
     <Content Include="Views\test\Details.cshtml" />
     <Content Include="Views\test\Edit.cshtml" />
     <Content Include="Views\test\Index.cshtml" />
-    <Content Include="Views\People\IndexPeoplePartialView.cshtml" />
-    <Content Include="Views\Shared\_PeoplePartialView.cshtml" />
+    <Content Include="Views\Shared\_PersonInPeople.cshtml" />
+    <Content Include="Views\People\PeoplePartialIndex.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

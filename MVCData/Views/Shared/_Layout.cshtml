@@ -7,6 +7,8 @@
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <script src="~/Scripts/modernizr-2.6.2.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 </head>
 <body>
     <div style="background-color: #808080" class="navbar navbar-inverse navbar-fixed-top">
@@ -31,7 +33,7 @@
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                     <li>@Html.ActionLink("GuessingGame", "GuessingGameForm", "GuessingGame")</li>
                     <li>@Html.ActionLink("People", "IndexPeople", "People")</li>
-                    <li>@Html.ActionLink("PeoplePartialView", "IndexPeople", "People")</li>
+                    <li>@Html.ActionLink("PersonPartialView", "PeoplePartialIndex", "People")</li>
                 </ul>
             </div>
         </div>

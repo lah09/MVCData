@@ -11,7 +11,7 @@ namespace MVCData.Models
 {
     public class People
     {
-        [Required]      //  not null
+        [Required]      //not null
         [Display(Name = "Name")]
         public string Name { get; set; }
 
@@ -22,7 +22,7 @@ namespace MVCData.Models
         [Required]
         public int Telephone { get; set; }
 
-        [Key]
+        [Key]       //primary key column
         [Required]
         public int PersonId { get; set; }        
     }

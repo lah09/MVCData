@@ -1,0 +1,17 @@
+﻿@model List<MVCData.Models.People>     /*both List and IEnumerable work find with this*/
+
+@{
+    ViewBag.Title = "PeoplePartialIndex";
+}
+
+<h2>Each Person in People Partial View</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        @foreach (var aPerson in Model)     //each person of the list of People
+        {          //string ActionName in Controller        object routeValues=id
+            @Html.Action("PeoplePartialView", new { id = aPerson.PersonId })            
+        }
+        
+    </div>
+</div>

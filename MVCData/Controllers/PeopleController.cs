@@ -32,15 +32,16 @@ namespace MVCData.Controllers
         [HttpGet]       //displays a form for user entry
         public ActionResult IndexPeople()
         {
-            return View(actress.ToList());      //displays all the List of name, city and tel
+            return View(actress);      //displays all the List of name, city and tel
         }
 
         [HttpPost]      //submits user's entry
         public ActionResult IndexPeople(string searchBy, string searchByLetter)
         {
             if (searchBy == "city")
-                return View(actress.Where(n => n.City.ToLower().StartsWith(searchByLetter.ToLower()) || searchByLetter == null).ToList());      
-            else
+                return View(actress.Where(n => n.City.ToLower().StartsWith(searchByLetter.ToLower()) || searchByLetter == null).ToList());
+                //enable user to search with lowercase letter/s
+            else
                 return View(actress.Where(n => n.Name.ToLower().StartsWith(searchByLetter.ToLower()) || searchByLetter == null).ToList());
                 //StartsWith - displays item/items(Name, City) with the letter/letters given as input for search 
         }
@@ -61,7 +62,7 @@ namespace MVCData.Controllers
             people.Telephone = Convert.ToInt32(formCollection["Telephone"]);
 
             actress.Add(people);        //adding new person (name, city and telephone #
-            return RedirectToAction("IndexPeople");  // leading to IndexPeople view
+            return RedirectToAction("IndexPeople");  //leading to IndexPeople view
         }
 
         [HttpGet]
@@ -74,7 +75,7 @@ namespace MVCData.Controllers
             }
             catch (Exception)
             {
-                return View("Error");
+                return View("Error");       //Error handling with wrong Id number input
             }
         }
 
@@ -91,12 +92,15 @@ namespace MVCData.Controllers
             return RedirectToAction("IndexPeople");                    //directing back to main (People) page
         }
 
-        public ActionResult IndexPeoplePartialView()
+        public ActionResult PeoplePartialIndex()        //gets People
         {
             return View(actress);
         }
+
+        public PartialViewResult PeoplePartialView(int id)    //gets People
+        {
+            People onePerson = actress.Single(p => p.PersonId == id);           //one tile for every person from People's list
+            return PartialView("_PersonInPeople", onePerson);                   //calling Partial View with the value of the instance "onePerson"
+        }
     }
 }
-
-
-

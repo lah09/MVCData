@@ -15,7 +15,7 @@ namespace MVCData
 
             routes.MapRoute(
                 "FeverCheck",                                                   //Route name
-                "fevercheck",                                                   //URL with parameters
+                "fevercheck",                                                   //URL
                 new { controller = "FeverCheck", action = "FeverCheckForm" }    // Parameter defaults
             );            
 

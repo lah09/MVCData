@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<MVCData.Models.People>       /* IEnumerable gets the List of People */
-
+                 @*strong type Views            and this is the View for the entire list of People*@
 @{
     ViewBag.Title = "IndexPeople";
 }
@@ -16,6 +16,7 @@
 <p>
     @Html.ActionLink("Create New", "Create")<br /><br />        @*//create button that leads to create view*@   
 </p>
+
 <table class="table table-bordered table-responsive table-striped">
     <tr> @*/*table row*/*@
         <th>PersonId</th>
@@ -46,3 +47,5 @@
     }
 </table>
 <br /><br />
+
+
