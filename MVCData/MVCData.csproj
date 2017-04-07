@@ -182,13 +182,16 @@
     <Content Include="Views\People\Search.cshtml" />
     <Content Include="Views\People\Create.cshtml" />
     <Content Include="Views\People\Delete.cshtml" />
-    <Content Include="Views\test\Create.cshtml" />
-    <Content Include="Views\test\Delete.cshtml" />
-    <Content Include="Views\test\Details.cshtml" />
-    <Content Include="Views\test\Edit.cshtml" />
-    <Content Include="Views\test\Index.cshtml" />
+    <Content Include="Views\TheButtonView\Create.cshtml" />
+    <Content Include="Views\TheButtonView\Delete.cshtml" />
+    <Content Include="Views\TheButtonView\Details.cshtml" />
+    <Content Include="Views\TheButtonView\Index.cshtml" />
     <Content Include="Views\Shared\_PersonInPeople.cshtml" />
     <Content Include="Views\People\PeoplePartialIndex.cshtml" />
+    <Content Include="Views\TheButtonView\Edit.cshtml" />
+    <Content Include="Views\People\PeoplePartialUpdate.cshtml" />
+    <Content Include="Views\People\AjaxCreate.cshtml" />
+    <Content Include="Views\People\PeoplePartialDelete.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

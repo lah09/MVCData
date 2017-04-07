@@ -1,0 +1,40 @@
+﻿@model IList<MVCData.Models.People>
+<br /><br />
+<div class="table-responsive">
+    <table id="indexTable" class="table table-bordered table-striped">
+        <tr>
+            @*/*table row*/*@
+            <th>PersonId</th>
+            <th>Name</th>       @*//table head*@
+            <th>City</th>
+            <th>Telephone Number</th>
+            <th>Action</th>
+            <th>Action with Ajax</th>
+        </tr>
+
+        @foreach (var act in Model)      //displays all the listed names, cities and telephone number
+        {
+
+            <tr>
+                <td>@act.PersonId</td>      @*table data*@
+                <td>@act.Name</td>
+                <td>@act.City</td>
+                <td>@act.Telephone</td>
+                <td>@Html.ActionLink("Delete", "Delete", new { id = act.PersonId })</td>     @*//delete button that leads to delete view,  id=act.PrimaryKey*@
+                @*<td>*@
+                @*@Ajax.ActionLink("Delete with Ajax", "AjaxDelete", new AjaxOptions()
+                    {
+                        HttpMethod = "POST",
+                        UpdateTargetId = "ajaxCreate",
+                        InsertionMode = InsertionMode.Replace
+                    })*@
+                @*<button onclick="AjaxDelete(@act.PersonId)">Remove</button>*@
+                @*</td>*@
+                <td>
+                    @Ajax.ActionLink("Delete with Ajax", "PeoplePartialDelete", "People", new { @id = act.PersonId }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "ajaxCreate" })
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+

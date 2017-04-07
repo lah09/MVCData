@@ -1,9 +1,12 @@
 ﻿@model MVCData.Models.People
 
 <div class="row">       @*//View of the Controller - displaying each person from the list of People*@ 
-    <p>@Model.PersonId</p>
-    <p>@Model.Name</p>
-    <p>@Model.City</p>
-    <p>@Model.Telephone</p>                      @*object routeValues=id*@
+    <p><b>Id:</b>@Model.PersonId</p>
+    <p><b>Name:</b>@Model.Name</p>
+    <p><b>City:</b>@Model.City</p>
+    <p><b>Tel.#:</b>@Model.Telephone</p>                      @*object routeValues=id*@
     <p>@Html.ActionLink("Delete", "Delete", new { id = Model.PersonId })</p>
+    <p>@Html.ActionLink("Edit", "Edit", new { id = Model.PersonId })</p>
+    <p>@Html.ActionLink("Submit", "Submit", new { id = Model.PersonId })</p>
+    <br /><br />
 </div>

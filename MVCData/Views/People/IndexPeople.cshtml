@@ -1,51 +1,73 @@
 ﻿@model IEnumerable<MVCData.Models.People>       /* IEnumerable gets the List of People */
-                 @*strong type Views            and this is the View for the entire list of People*@
-@{
-    ViewBag.Title = "IndexPeople";
-}
+@*strong type Views            and this is the View for the entire list of People*@
 
-<br />
-<h2 style="color:blue">Search</h2><br />
-@using (Html.BeginForm("IndexPeople", "People", FormMethod.Post)) //Post Form for Name and City
-{
-    <br />        
-    @Html.RadioButton("searchBy", "name")<text>Name </text>
-    @Html.RadioButton("searchBy", "city")<text>City </text>
-    @Html.TextBox("searchByLetter")<input type="submit" value="Search" /><br /><br />
-}
-<p>
-    @Html.ActionLink("Create New", "Create")<br /><br />        @*//create button that leads to create view*@   
-</p>
+<script src="~/Scripts/jquery-1.10.2.js"></script>        @*makes it much easier to use JavaScript on website. Lightweight JavaScript Library*@
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>      @*makes Ajax calls through the built-in helper methods*@
 
-<table class="table table-bordered table-responsive table-striped">
-    <tr> @*/*table row*/*@
-        <th>PersonId</th>
-        <th>Name</th>       @*//table head*@
-        <th>City</th>
-        <th>Telephone Number</th>
-        <th>Action</th>
-    </tr>
-
-    @if (Model.Count() == 0)        //if input doesn't much anything in the list text message of "No match for search..." will be displayed
+<div class="table-responsive">
+    <br /><br />
+    <p style="color:blue"><font size="4">Search</font></p>
+    @using (Html.BeginForm("IndexPeople", "People", FormMethod.Post))       //Post Form in search for Name and City
+                            //ActionName,  Controller
     {
-        <tr>  @*//table column*@
-            <td colspan="3">No match for search criteria</td>  @*//colspan of 3 columns (name, city, telephone)*@
-        </tr>
+        @Html.RadioButton("searchBy", "name", true)<text>Name </text>       //true: Name is automatically selected to search first
+        @Html.RadioButton("searchBy", "city")<text>City </text>             //<text></text> avoids considering "Name, City" as C# code otherwise error
+        @Html.TextBox("searchByLetter")<input type="submit" value="Search" /><br /><br /><br />
     }
-    else
-    {
-        foreach (var act in Model)      //displays all the listed names, cities and telephone number
-        {
+
+    @Html.ActionLink("Create New", "Create") &nbsp; &nbsp; &nbsp;        @*//Create Button that leads to Create View*@
+    @Ajax.ActionLink("Create New with Ajax", "AjaxCreate", new AjaxOptions()    //AjaxCreate = Action Method
+                {
+                    HttpMethod = "Get",
+                    UpdateTargetId = "ajaxCreate",
+                    InsertionMode = InsertionMode.Replace
+                })
+
+    <div id="ajaxCreate"></div>     @*content holder for AjaxCreate and displays info from a server*@
+    <br />
+
+    <table id="indexTable" class="table table-bordered table-striped">
+        <tr>
+            @*/*table row*/*@
+            <th>PersonId</th>
+            <th>Name</th>       @*//table head*@
+            <th>City</th>
+            <th>Telephone Number</th>
+            <th>Action</th>
+            <th>Action with Ajax</th>
+        </tr>
+
+        @if (Model.Count() == 0) //if input doesn't much anything in the list, text message of "No match for search..." will be displayed
+            {
             <tr>
-                <td>@act.PersonId</td>
-                <td>@act.Name</td>
-                <td>@act.City</td>
-                <td>@act.Telephone</td>
-                <td>@Html.ActionLink("Delete", "Delete", new {id=act.PersonId})</td>     @*//delete button that leads to delete view,  id=act.PrimaryKey*@
+                @*//table column*@
+                <td colspan="3">No match for search criteria</td>  @*//colspan of 3 columns (name, city, telephone)*@
             </tr>
         }
+        else
+        {
+            foreach (var act in Model)      //displays all the listed names, cities and telephone number
+            {
+                <tr>
+                    <td>@act.PersonId</td>      @*table data*@
+                    <td>@act.Name</td>
+                    <td>@act.City</td>
+                    <td>@act.Telephone</td>
+                    <td>@Html.ActionLink("Delete", "Delete", new { id = act.PersonId })</td>     @*//delete button that leads to delete view,  id=act.PrimaryKey*@
+                    <td>
+                        @Ajax.ActionLink("Delete with Ajax", "PeoplePartialDelete", new { @id = act.PersonId }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "ajaxCreate", OnSuccess = "updateIndex()" })
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+</div>
+
+<script>
+    var updateIndex = function () {
+        $.get("@Url.Action("PeoplePartialUpdate")", function (data, status) {
+            document.getElementById("indexTable").innerHTML = data;  //get the Element with id="indexTable" (Table "id")
+            console.log(data);      //print data. An instruction that literally commands the console to log something to the computer screen
+        })
     }
-</table>
-<br /><br />
-
-
+</script>

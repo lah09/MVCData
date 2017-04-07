@@ -10,97 +10,155 @@ using System.Web.Mvc;
 
 namespace MVCData.Controllers
 {
-    public class PeopleController : Controller      //inheritance
+    public class PeopleController : Controller //Inheritance
     {
         // GET: People
-        static IList<People> actress = new List<People>  //static variable exists in memory for all the objects of that class
-                                                         //IList = more control over a collection: Add, Delete, etc
+        static IList<People> actress = new List<People> //static variable exists in memory for all the objects of that class
+        //IList = more control over a collection: Add, Delete, etc
 {
-    new People() {PersonId=1, Name="Salma Hayek", City="New York City", Telephone=12340567 },       //new List's object
-    new People() {PersonId=2, Name="Natalie Portman", City="California", Telephone=10234567 },
-    new People() {PersonId=3, Name="Angelina Jolie", City="Chicago", Telephone=20134567 },
-    new People() {PersonId=4, Name="Keira Knightley", City="Texas", Telephone=10235467 },
-    new People() {PersonId=5, Name="Whoopi Goldberg", City="Oregon", Telephone=10234576 },
-    new People() {PersonId=6, Name="Alicia Silverstone", City="Florida", Telephone=12345670 },
-    new People() {PersonId=7, Name="Anne Hathaway", City="Michigan", Telephone=10234756 },
-    new People() {PersonId=8, Name="Ashley Judd", City="Kentucky", Telephone=10256347 },
-    new People() {PersonId=9, Name="Nicole Kidman", City="New Jersey", Telephone=23456107 },
-    new People() {PersonId=10, Name="Halle Berry", City="Washington", Telephone=10362457 },
-    new People() {PersonId=11, Name="Kim Kardashian", City="Ohio", Telephone=10234572 },
+new People() {PersonId=1, Name="Salma Hayek", City="New York City", Telephone="0701234567" }, //new List's object
+new People() {PersonId=2, Name="Natalie Portman", City="California", Telephone="0731023456" },
+new People() {PersonId=3, Name="Angelina Jolie", City="Chicago", Telephone="0702013456" },
+new People() {PersonId=4, Name="Keira Knightley", City="Texas", Telephone="0702354678" },
+new People() {PersonId=5, Name="Whoopi Goldberg", City="Oregon", Telephone="0701023457" },
+new People() {PersonId=6, Name="Alicia Silverstone", City="Florida", Telephone="0738074123" },
+new People() {PersonId=7, Name="Anne Hathaway", City="Michigan", Telephone="0732347568" },
+new People() {PersonId=8, Name="Ashley Judd", City="Kentucky", Telephone="0731025634" },
+new People() {PersonId=9, Name="Nicole Kidman", City="New Jersey", Telephone="0703456107" },
+new People() {PersonId=10, Name="Halle Berry", City="Washington", Telephone="0739153624" },
+new People() {PersonId=11, Name="Kim Kardashian", City="Ohio", Telephone="0737910234" },
 };
 
-        [HttpGet]       //displays a form for user entry
+        [HttpGet] //displays a form for user entry
         public ActionResult IndexPeople()
         {
-            return View(actress);      //displays all the List of name, city and tel
+            return View(actress); //displays all the List of name, city and tel
         }
 
-        [HttpPost]      //submits user's entry
+        [HttpPost] //submits user's entry
         public ActionResult IndexPeople(string searchBy, string searchByLetter)
         {
             if (searchBy == "city")
                 return View(actress.Where(n => n.City.ToLower().StartsWith(searchByLetter.ToLower()) || searchByLetter == null).ToList());
-                //enable user to search with lowercase letter/s
+            //enable user to search with lowercase letter/s
             else
                 return View(actress.Where(n => n.Name.ToLower().StartsWith(searchByLetter.ToLower()) || searchByLetter == null).ToList());
-                //StartsWith - displays item/items(Name, City) with the letter/letters given as input for search 
+            //StartsWith - displays item/items(Name, City) with the letter/letters given as input for search 
         }
-               
+                
+        //------------------------------------------------------------------------------------------------
+
+        public ActionResult PeoplePartialIndex()        //People List Partial View
+        {
+            return View(actress);
+        }
+
+        public PartialViewResult PeoplePartialView(int id) //action for Partial View
+        {
+            People onePerson = actress.Single(p => p.PersonId == id); //one tile for every person in People's list
+            return PartialView("_PersonInPeople", onePerson); //calling Partial View with the value of the instance "onePerson"
+        }
+
+        //-------------------------------------------------------------------------------------------------
+
         [HttpGet]
-        public ActionResult Create()        //add name, city and telephone #
+        public ActionResult Create() //add name, city and telephone #
         {
             return View();
         }
 
         [HttpPost]
-        public ActionResult Create(FormCollection formCollection)  //FormCollection - captures the form's values within the controller
+        public ActionResult Create(FormCollection formCollection) //FormCollection - captures the form's values within the controller
         {
-            People people = new People();       //object for People Class
-            people.PersonId = Convert.ToInt32(formCollection["PersonId"]);
-            people.Name = formCollection["Name"];
-            people.City = formCollection["City"];
-            people.Telephone = Convert.ToInt32(formCollection["Telephone"]);
-
-            actress.Add(people);        //adding new person (name, city and telephone #
-            return RedirectToAction("IndexPeople");  //leading to IndexPeople view
+            if (ModelState.IsValid)     //instead of try and catch
+            {
+                People people = new People(); //object for People Class
+                people.PersonId = Convert.ToInt32(formCollection["PersonId"]);
+                people.Name = formCollection["Name"];
+                people.City = formCollection["City"];
+                people.Telephone = formCollection["Telephone"];
+                actress.Add(people); //adding new person (name, city and telephone #
+                return RedirectToAction("IndexPeople"); //leading to IndexPeople view
+            }
+            return View("Error");   //instead of try and catch            
+        }
+                
+        public ActionResult AjaxCreate() //GET for AjaxCreate. Add a row with details of name, city and telephone #
+        {
+            return PartialView();
         }
 
+        [HttpPost]
+        public ActionResult AjaxCreate([Bind(Include = "PersonId, Name, City, Telephone")] FormCollection formCollection) //add name, city and telephone #
+        {
+            if (ModelState.IsValid)     //instead of try and catch
+            {
+                People people = new People(); //object for People Class
+                people.PersonId = Convert.ToInt32(formCollection["PersonId"]);
+                people.Name = formCollection["Name"];
+                people.City = formCollection["City"];
+                people.Telephone = formCollection["Telephone"];
+                actress.Add(people); //adding new row (person, name, city and telephone #)
+                return Content(""); 
+            }
+            return View("Error");   //instead of try and catch
+        }
+        
+        public ActionResult PeoplePartialUpdate()       //AJAX Partial Create [HttpGet]
+        {
+            return PartialView(actress);                //update displaying People List
+        }
+        //-------------------------------------------------------------------------------------------------
+
         [HttpGet]
-        public ActionResult Delete(int id)      //displaying the Id to delete
+        public ActionResult Delete(int id) //displaying the Id to delete
         {
             try
             {
-                People person = actress.Single(p => p.PersonId == id);      //*Single = deleting single row/Id in the table
+                People person = actress.Single(p => p.PersonId == id); //*Single = deleting single row/Id in the table
                 return View(person);
             }
             catch (Exception)
             {
-                return View("Error");       //Error handling with wrong Id number input
+                return View("Error"); //Error handling - wrong Id number
             }
         }
 
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)  //*FormCollection =  access the form element in action method of the controller 
+        public ActionResult Delete(int id, FormCollection collection) //*FormCollection = access the form element in ACTION METHOD of the CONTROLLER
         {
-            People ppl = actress.Single(p => p.PersonId == id);        //with Lambda expression
-            ppl.PersonId = Convert.ToInt32(collection["PersonId"]);
-            ppl.Name = collection["Name"];
-            ppl.City = collection["City"];
-            ppl.Telephone = Convert.ToInt32(collection["Telephone"]);
-
-            actress.Remove(ppl);                                       //deleting Id/row
-            return RedirectToAction("IndexPeople");                    //directing back to main (People) page
+            try
+            {
+                People ppl = actress.Single(p => p.PersonId == id); //with LAMBDA EXPRESSION
+                ppl.PersonId = Convert.ToInt32(collection["PersonId"]);
+                ppl.Name = collection["Name"];
+                ppl.City = collection["City"];
+                ppl.Telephone = collection["Telephone"];
+                actress.Remove(ppl); //deleting Id/row
+                return RedirectToAction("IndexPeople"); //directing back to Main (People) Page
+            }
+            catch
+            {
+                return View("Error");
+            }
         }
+                
+        //[HttpPost]
+        //public ActionResult AjaxDelete(int id)
+        //{
+        //    People person = actress.Single(p => p.PersonId == id); //*Single = deleting single row/Id in the table
+        //    return View(person);
+        //}
 
-        public ActionResult PeoplePartialIndex()        //gets People
+        public ActionResult PeoplePartialDelete(int id, FormCollection delRow)
         {
-            return View(actress);
-        }
-
-        public PartialViewResult PeoplePartialView(int id)    //gets People
-        {
-            People onePerson = actress.Single(p => p.PersonId == id);           //one tile for every person from People's list
-            return PartialView("_PersonInPeople", onePerson);                   //calling Partial View with the value of the instance "onePerson"
+            People ppl = actress.Single(p => p.PersonId == id); //with LAMBDA EXPRESSION
+            ppl.PersonId = Convert.ToInt32(delRow["PersonId"]);
+            ppl.Name = delRow["Name"];
+            ppl.City = delRow["City"];
+            ppl.Telephone = delRow["Telephone"];
+            actress.Remove(ppl); //deleting Id/row             
+            return PartialView("PeoplePartialDelete", actress.ToList());
         }
     }
 }
