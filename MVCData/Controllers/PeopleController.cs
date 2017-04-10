@@ -45,7 +45,7 @@ new People() {PersonId=11, Name="Kim Kardashian", City="Ohio", Telephone="073791
                 return View(actress.Where(n => n.Name.ToLower().StartsWith(searchByLetter.ToLower()) || searchByLetter == null).ToList());
             //StartsWith - displays item/items(Name, City) with the letter/letters given as input for search 
         }
-                
+
         //------------------------------------------------------------------------------------------------
 
         public ActionResult PeoplePartialIndex()        //People List Partial View
@@ -82,7 +82,7 @@ new People() {PersonId=11, Name="Kim Kardashian", City="Ohio", Telephone="073791
             }
             return View("Error");   //instead of try and catch            
         }
-                
+
         public ActionResult AjaxCreate() //GET for AjaxCreate. Add a row with details of name, city and telephone #
         {
             return PartialView();
@@ -99,11 +99,11 @@ new People() {PersonId=11, Name="Kim Kardashian", City="Ohio", Telephone="073791
                 people.City = formCollection["City"];
                 people.Telephone = formCollection["Telephone"];
                 actress.Add(people); //adding new row (person, name, city and telephone #)
-                return Content(""); 
+                return Content("");
             }
             return View("Error");   //instead of try and catch
         }
-        
+
         public ActionResult PeoplePartialUpdate()       //AJAX Partial Create [HttpGet]
         {
             return PartialView(actress);                //update displaying People List
@@ -142,23 +142,23 @@ new People() {PersonId=11, Name="Kim Kardashian", City="Ohio", Telephone="073791
                 return View("Error");
             }
         }
-                
-        //[HttpPost]
-        //public ActionResult AjaxDelete(int id)
-        //{
-        //    People person = actress.Single(p => p.PersonId == id); //*Single = deleting single row/Id in the table
-        //    return View(person);
-        //}
 
         public ActionResult PeoplePartialDelete(int id, FormCollection delRow)
         {
-            People ppl = actress.Single(p => p.PersonId == id); //with LAMBDA EXPRESSION
-            ppl.PersonId = Convert.ToInt32(delRow["PersonId"]);
-            ppl.Name = delRow["Name"];
-            ppl.City = delRow["City"];
-            ppl.Telephone = delRow["Telephone"];
-            actress.Remove(ppl); //deleting Id/row             
-            return PartialView("PeoplePartialDelete", actress.ToList());
+            try
+            {
+                People delPerson = actress.Single(p => p.PersonId == id); //with LAMBDA EXPRESSION
+                delPerson.PersonId = Convert.ToInt32(delRow["PersonId"]);
+                delPerson.Name = delRow["Name"];
+                delPerson.City = delRow["City"];
+                delPerson.Telephone = delRow["Telephone"];
+                actress.Remove(delPerson); //deleting Id/row             
+                return PartialView("PeoplePartialDelete", actress.ToList());
+            }
+            catch
+            {
+                return View("Error");
+            }
         }
     }
 }

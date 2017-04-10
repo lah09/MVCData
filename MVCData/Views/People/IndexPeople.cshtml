@@ -10,7 +10,7 @@
     @using (Html.BeginForm("IndexPeople", "People", FormMethod.Post))       //Post Form in search for Name and City
                             //ActionName,  Controller
     {
-        @Html.RadioButton("searchBy", "name", true)<text>Name </text>       //true: Name is automatically selected to search first
+        @Html.RadioButton("searchBy", "name", true)<text>Name </text>       //true: Name is automatically selected to search
         @Html.RadioButton("searchBy", "city")<text>City </text>             //<text></text> avoids considering "Name, City" as C# code otherwise error
         @Html.TextBox("searchByLetter")<input type="submit" value="Search" /><br /><br /><br />
     }
@@ -55,7 +55,7 @@
                     <td>@act.Telephone</td>
                     <td>@Html.ActionLink("Delete", "Delete", new { id = act.PersonId })</td>     @*//delete button that leads to delete view,  id=act.PrimaryKey*@
                     <td>
-                        @Ajax.ActionLink("Delete with Ajax", "PeoplePartialDelete", new { @id = act.PersonId }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "ajaxCreate", OnSuccess = "updateIndex()" })
+                        @Ajax.ActionLink("Delete with Ajax", "PeoplePartialDelete", "People", new { id = act.PersonId }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "ajaxCreate"@*, OnSuccess = "updateIndex()"*@ })
                     </td>
                 </tr>
             }

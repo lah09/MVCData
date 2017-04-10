@@ -11,30 +11,35 @@
             <th>Action</th>
             <th>Action with Ajax</th>
         </tr>
-
-        @foreach (var act in Model)      //displays all the listed names, cities and telephone number
-        {
-
+        @if (Model.Count() == 0) //if input doesn't much anything in the list, text message of "No match for search..." will be displayed
+            {
+           
             <tr>
-                <td>@act.PersonId</td>      @*table data*@
-                <td>@act.Name</td>
-                <td>@act.City</td>
-                <td>@act.Telephone</td>
-                <td>@Html.ActionLink("Delete", "Delete", new { id = act.PersonId })</td>     @*//delete button that leads to delete view,  id=act.PrimaryKey*@
-                @*<td>*@
-                @*@Ajax.ActionLink("Delete with Ajax", "AjaxDelete", new AjaxOptions()
-                    {
-                        HttpMethod = "POST",
-                        UpdateTargetId = "ajaxCreate",
-                        InsertionMode = InsertionMode.Replace
-                    })*@
-                @*<button onclick="AjaxDelete(@act.PersonId)">Remove</button>*@
-                @*</td>*@
-                <td>
-                    @Ajax.ActionLink("Delete with Ajax", "PeoplePartialDelete", "People", new { @id = act.PersonId }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "ajaxCreate" })
-                </td>
-            </tr>
+                @*//table column*@
+                <td colspan="3">No match for search criteria</td>  @*//colspan of 3 columns (name, city, telephone)*@
+            </tr>}
+        else
+        {
+            foreach (var act in Model)      //displays all the listed names, cities and telephone number
+            {
+               
+                <tr>
+                    <td>@act.PersonId</td>      @*table data*@
+                    <td>@act.Name</td>
+                    <td>@act.City</td>
+                    <td>@act.Telephone</td>
+                    <td>@Html.ActionLink("Delete", "Delete", new { id = act.PersonId })</td>     @*//delete button that leads to delete view,  id=act.PrimaryKey*@                   
+                    <td>
+                        @Ajax.ActionLink("Delete with Ajax", "PeoplePartialDelete", "People", new { @id = act.PersonId }, new AjaxOptions
+                   {
+                       HttpMethod = "GET",
+                       UpdateTargetId = "ajaxCreate",
+                       OnSuccess = "updateIndex()"
+                   })
+                    </td>
+                </tr>}
         }
     </table>
+    <br /><br />
 </div>
 
