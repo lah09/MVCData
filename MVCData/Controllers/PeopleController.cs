@@ -152,8 +152,8 @@ new People() {PersonId=11, Name="Kim Kardashian", City="Ohio", Telephone="073791
                 delPerson.Name = delRow["Name"];
                 delPerson.City = delRow["City"];
                 delPerson.Telephone = delRow["Telephone"];
-                actress.Remove(delPerson); //deleting Id/row             
-                return Content(""); /*PartialView("PeoplePartialDelete", actress.ToList()); --- changed to Content("") otherwise 2 table appears*/
+                actress.Remove(delPerson); //deleting Id/row                         
+                return Content(""); /*PartialView("PeoplePartialDelete", actress.ToList()); --- changed to Content("") otherwise 2 tables appear*/
             }
             catch
             {
