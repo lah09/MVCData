@@ -16,7 +16,7 @@ namespace MVCData.Controllers
         static IList<People> actress = new List<People> //static variable exists in memory for all the objects of that class
         //IList = more control over a collection: Add, Delete, etc
 {
-new People() {PersonId=1, Name="Salma Hayek", City="New York City", Telephone="0701234567" }, //new List's object
+new People() {PersonId=1, Name="Salma Hayek", City="New York City", Telephone="0701234567" }, //new object List
 new People() {PersonId=2, Name="Natalie Portman", City="California", Telephone="0731023456" },
 new People() {PersonId=3, Name="Angelina Jolie", City="Chicago", Telephone="0702013456" },
 new People() {PersonId=4, Name="Keira Knightley", City="Texas", Telephone="0702354678" },
@@ -30,7 +30,7 @@ new People() {PersonId=11, Name="Kim Kardashian", City="Ohio", Telephone="073791
 };
 
         [HttpGet] //displays a form for user entry
-        public ActionResult IndexPeople()
+        public ActionResult IndexPeople()   //Method
         {
             return View(actress); //displays all the List of name, city and tel
         }
@@ -50,7 +50,7 @@ new People() {PersonId=11, Name="Kim Kardashian", City="Ohio", Telephone="073791
 
         public ActionResult PeoplePartialIndex()        //People List Partial View
         {
-            return View(actress);
+            return View(actress);       //"View" - generates a result back
         }
 
         public PartialViewResult PeoplePartialView(int id) //action for Partial View
@@ -128,8 +128,8 @@ new People() {PersonId=11, Name="Kim Kardashian", City="Ohio", Telephone="073791
         public ActionResult Delete(int id, FormCollection collection) //*FormCollection = access the form element in ACTION METHOD of the CONTROLLER
         {
             try
-            {
-                People ppl = actress.Single(p => p.PersonId == id); //with LAMBDA EXPRESSION
+            {                                  //Lambda Expression
+                People ppl = actress.Single(p => p.PersonId == id);
                 ppl.PersonId = Convert.ToInt32(collection["PersonId"]);
                 ppl.Name = collection["Name"];
                 ppl.City = collection["City"];
@@ -147,13 +147,13 @@ new People() {PersonId=11, Name="Kim Kardashian", City="Ohio", Telephone="073791
         {
             try
             {
-                People delPerson = actress.Single(p => p.PersonId == id); //with LAMBDA EXPRESSION
+                People delPerson = actress.Single(p => p.PersonId == id);
                 delPerson.PersonId = Convert.ToInt32(delRow["PersonId"]);
                 delPerson.Name = delRow["Name"];
                 delPerson.City = delRow["City"];
                 delPerson.Telephone = delRow["Telephone"];
                 actress.Remove(delPerson); //deleting Id/row             
-                return PartialView("PeoplePartialDelete", actress.ToList());
+                return Content(""); /*PartialView("PeoplePartialDelete", actress.ToList()); --- changed to Content("") otherwise 2 table appears*/
             }
             catch
             {

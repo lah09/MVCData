@@ -55,7 +55,7 @@
                     <td>@act.Telephone</td>
                     <td>@Html.ActionLink("Delete", "Delete", new { id = act.PersonId })</td>     @*//delete button that leads to delete view,  id=act.PrimaryKey*@
                     <td>
-                        @Ajax.ActionLink("Delete with Ajax", "PeoplePartialDelete", "People", new { id = act.PersonId }, new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "ajaxCreate"@*, OnSuccess = "updateIndex()"*@ })
+                        @Ajax.ActionLink("Delete with Ajax", "PeoplePartialDelete", "People", new { id = act.PersonId }, new AjaxOptions { HttpMethod = "GET", OnSuccess = "updateIndex()" })
                     </td>
                 </tr>
             }

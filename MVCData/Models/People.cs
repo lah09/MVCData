@@ -16,7 +16,7 @@ namespace MVCData.Models
         [Display(Name = "Name")]
         [Required(ErrorMessage = "This Name field is required")]
         [StringLength(100, MinimumLength = 2, ErrorMessage = "Enter at least 2 letters")]
-        public string Name { get; set; }
+        public string Name { get; set; }        //{get; set;} uses C#'s auto-implemented properties feature
 
         [Required(ErrorMessage = "This City field is required")]
         [Display(Name = "City")]
